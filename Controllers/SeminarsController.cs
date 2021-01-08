@@ -20,15 +20,22 @@ namespace SeminarCore2.Controllers
         }
 
         // GET: Seminars
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NazivSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DatumSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["BrojSortParm"] = sortOrder == "Broj" ? "broj_desc" : "Broj";
+            ViewData["CurrentFilter"] = searchString;
 
             var seminari = from s in _context.Seminari
                             .Include(x => x.Predbiljezbe) //dodao
                            select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                seminari = seminari.Where(s => s.Naziv.Contains(searchString)
+                                       || s.Opis.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
