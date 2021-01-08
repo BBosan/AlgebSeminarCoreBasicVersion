@@ -20,11 +20,39 @@ namespace SeminarCore2.Controllers
         }
 
         // GET: Seminars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Seminari.ToListAsync());
-        }
+            ViewData["NazivSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DatumSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["BrojSortParm"] = sortOrder == "Broj" ? "broj_desc" : "Broj";
 
+            var seminari = from s in _context.Seminari
+                            .Include(x => x.Predbiljezbe) //dodao
+                           select s;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    seminari = seminari.OrderByDescending(s => s.Naziv);
+                    break;
+                case "Date":
+                    seminari = seminari.OrderBy(s => s.Datum);
+                    break;
+                case "date_desc":
+                    seminari = seminari.OrderByDescending(s => s.Datum);
+                    break;
+                case "Broj":
+                    seminari = seminari.OrderBy(s => s.Predbiljezbe.Count).ThenBy(n => n.PopunjenDaNe); //then by
+                    break;
+                case "broj_desc":
+                    seminari = seminari.OrderByDescending(s => s.Predbiljezbe.Count);
+                    break;
+                default:
+                    seminari = seminari.OrderBy(s => s.Naziv);
+                    break;
+            }
+            return View(await seminari.AsNoTracking().ToListAsync());
+        }
         // GET: Seminars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -104,6 +132,10 @@ namespace SeminarCore2.Controllers
 
             return View(seminar);
         }
+
+
+
+
 
         // POST: Seminars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
