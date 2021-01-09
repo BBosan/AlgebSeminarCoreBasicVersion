@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeminarCore2.Data;
+using SeminarCore2.Extra;
 using SeminarCore2.Models;
 
 namespace SeminarCore2.Controllers
@@ -20,11 +21,24 @@ namespace SeminarCore2.Controllers
         }
 
         // GET: Seminars
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
+
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NazivSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DatumSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["BrojSortParm"] = sortOrder == "Broj" ? "broj_desc" : "Broj";
+
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             ViewData["CurrentFilter"] = searchString;
 
             var seminari = from s in _context.Seminari
@@ -58,8 +72,21 @@ namespace SeminarCore2.Controllers
                     seminari = seminari.OrderBy(s => s.Naziv);
                     break;
             }
-            return View(await seminari.AsNoTracking().ToListAsync());
+
+            #region INFO
+            /*
+            The PaginatedList.CreateAsync method takes a page number. The two question marks represent the 
+            null-coalescing operator. The null-coalescing operator defines a default value for a nullable type; 
+            the expression (pageNumber ?? 1) means return the value of pageNumber if it has a value,
+            or return 1 if pageNumber is null. 
+            */ 
+            #endregion
+            int pageSize = 3;
+            return View(await PaginatedList<Seminar>.CreateAsync(seminari.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+
+
+
         // GET: Seminars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
