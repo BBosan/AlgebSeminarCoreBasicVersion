@@ -81,7 +81,7 @@ namespace SeminarCore2.Controllers
             or return 1 if pageNumber is null. 
             */ 
             #endregion
-            int pageSize = 3;
+            int pageSize = 2;
             return View(await PaginatedList<Seminar>.CreateAsync(seminari.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
