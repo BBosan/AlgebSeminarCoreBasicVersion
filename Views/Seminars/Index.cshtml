@@ -91,6 +91,12 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
+@*<span class="badge badge-dark p-2">@(Model.PageIndex).</span>*@
+
+<div class="btn btn-light" style="pointer-events: none">
+    Page <span class="badge badge-primary">@(Model.PageIndex)</span>
+</div>
+
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
@@ -106,3 +112,4 @@
    class="btn btn-light @nextDisabled">
     Next
 </a>
+
