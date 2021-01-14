@@ -38,6 +38,7 @@ namespace SeminarCore2.Models
         public string BrojTelefona { get; set; }
 
         [Display(Name = "Status")]
+        [DisplayFormat(NullDisplayText = "NotSet")]
         public Nullable<bool> StatusDaNe { get; set; }
 
         public int SeminarID { get; set; }
