@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SeminarCore2.Models.SeminarViewModels.EnrollmentDateGroup>
+
+@{
+    ViewData["Title"] = "Seminar Statistics";
+}
+
+<h2>Seminar Statistics</h2>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Datum Sem.
+                </th>
+                <th>
+                    Naziv Seminara
+                </th>
+                <th>
+                    Studenti
+                </th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumSeminara)
+                    </td>
+                    <td>
+                        @item.NazivSeminara
+                    </td>
+                    <td>
+                        @item.StudentCount
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
