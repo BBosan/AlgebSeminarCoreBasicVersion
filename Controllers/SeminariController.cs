@@ -11,11 +11,11 @@ using SeminarCore2.Models;
 
 namespace SeminarCore2.Controllers
 {
-    public class SeminarsController : Controller
+    public class SeminariController : Controller
     {
         private readonly MojContext _context;
 
-        public SeminarsController(MojContext context)
+        public SeminariController(MojContext context)
         {
             _context = context;
         }

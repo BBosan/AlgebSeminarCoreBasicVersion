@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SeminarCore2.Models.Predbiljezba>
+
+@{
+    ViewData["Title"] = "Predbiljezbe";
+}
+
+<h1>Predbiljezbe</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PredbiljezbaID)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BrojTelefona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusDaNe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seminar)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.PredbiljezbaID)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Email)*@
+                <a href="mailto:@(item.Email)?Subject=Hello%20@(item.Ime)" target="_top">@@</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrojTelefona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusDaNe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seminar.Naziv)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PredbiljezbaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PredbiljezbaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PredbiljezbaID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
