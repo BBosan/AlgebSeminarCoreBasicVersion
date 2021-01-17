@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ namespace SeminarCore2
             });
 
             services.AddDbContextPool<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
+            services.AddIdentity<IdentityUser, IdentityRole>();
 
             services.AddMvc()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
         }
