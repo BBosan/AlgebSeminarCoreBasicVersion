@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SeminarCore2.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SeminarCore2.Data
 {
-    public class MojContext : DbContext
+    public class MojContext : IdentityDbContext
     {
         public MojContext(DbContextOptions<MojContext> options) : base(options)
         {
