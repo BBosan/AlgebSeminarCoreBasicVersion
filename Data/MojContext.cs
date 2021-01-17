@@ -20,6 +20,7 @@ namespace SeminarCore2.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); //fix for error after addmigration
             modelBuilder.Entity<Seminar>().ToTable("Seminar");
             modelBuilder.Entity<Predbiljezba>().ToTable("Predbiljezba");
             modelBuilder.Entity<Zaposlenik>().ToTable("Zaposlenik");

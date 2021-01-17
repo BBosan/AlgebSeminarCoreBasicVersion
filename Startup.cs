@@ -35,7 +35,8 @@ namespace SeminarCore2
             });
 
             services.AddDbContextPool<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
-            services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<MojContext>();
 
             services.AddMvc()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
         }
@@ -56,6 +57,7 @@ namespace SeminarCore2
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication(); //Idenitity
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
