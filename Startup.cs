@@ -33,7 +33,7 @@ namespace SeminarCore2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
+            services.AddDbContextPool<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
 
             services.AddMvc()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
         }
