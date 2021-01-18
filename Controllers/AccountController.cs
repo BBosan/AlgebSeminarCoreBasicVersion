@@ -21,6 +21,12 @@ namespace SeminarCore2.Controllers
             this.signInManager = signInManager;
         }
 
+
+
+
+
+
+
         [HttpGet]
         public IActionResult Register()
         {
