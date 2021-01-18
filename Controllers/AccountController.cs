@@ -45,11 +45,18 @@ namespace SeminarCore2.Controllers
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-
             }
-
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+
 
     }
 }

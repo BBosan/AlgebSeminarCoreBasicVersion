@@ -35,8 +35,37 @@ namespace SeminarCore2
             });
 
             services.AddDbContextPool<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<MojContext>();
+
+
+            //Email: admin@admin.com
+            //Password: admin
+            //https://github.com/dotnet/aspnetcore/blob/b795ac3546eb3e2f47a01a64feb3020794ca33bb/src/Identity/Extensions.Core/src/PasswordOptions.cs
+            #region MozeIliOvo
+            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 3;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+
+            }).AddEntityFrameworkStores<MojContext>();
+            #endregion
+
+
+
+            #region MozeIliOvoGoreUAddIdentity
+            //services.Configure<IdentityOptions>(opt =>
+            //{
+            //    opt.Password.RequireDigit = false;
+            //    opt.Password.RequiredLength = 3;
+            //    opt.Password.RequireLowercase = false;
+            //    opt.Password.RequireNonAlphanumeric = false;
+            //    opt.Password.RequireUppercase = false;
+            //    opt.Password.RequireDigit = false;
+            //}); 
+            #endregion
 
             services.AddMvc()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
         }
