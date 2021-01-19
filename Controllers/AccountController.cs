@@ -48,7 +48,6 @@ namespace SeminarCore2.Controllers
                         return RedirectToAction(nameof(HomeController.Index), "Home");
                     }
                 }
-
                 ModelState.AddModelError(string.Empty, "Invalid Login");
             }
             return View(model);
