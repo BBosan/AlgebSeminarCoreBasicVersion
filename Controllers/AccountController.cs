@@ -21,10 +21,28 @@ namespace SeminarCore2.Controllers
             this.signInManager = signInManager;
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
 
-
+                ModelState.AddModelError(string.Empty, "Invalid Login");
+            }
+            return View(model);
+        }
 
 
         [HttpGet]
