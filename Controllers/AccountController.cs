@@ -93,5 +93,23 @@ namespace SeminarCore2.Controllers
 
 
 
+        #region RemoteValidationExample
+        /*for it to work in client side validation we need remote attribute - see RegisterViewModel*/
+        [HttpPost][HttpGet] //or [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null) //if user is null that means we dont have validation errors
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email {email} is in use");
+            }
+        }
+        #endregion
+
+
     }
 }

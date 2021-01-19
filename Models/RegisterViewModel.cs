@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SeminarCore2.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace SeminarCore2.Models
     {
         [Required]
         [EmailAddress]
+        [Remote(action: nameof(AccountController.IsEmailInUse), controller: "Account")]
         public string Email { get; set; }
 
         [Required]
