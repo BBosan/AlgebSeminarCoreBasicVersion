@@ -31,7 +31,7 @@ namespace SeminarCore2.Controllers
 
         [HttpPost]
         //[AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -39,7 +39,14 @@ namespace SeminarCore2.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    }
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login");
