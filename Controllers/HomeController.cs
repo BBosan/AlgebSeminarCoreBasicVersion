@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeminarCore2.Data;
 using SeminarCore2.Models;
@@ -30,7 +31,7 @@ namespace SeminarCore2.Controllers
             return View();
         }
 
-
+        [Authorize]
         public async Task<ActionResult> About()
         {
             IQueryable<EnrollmentDateGroup> data =

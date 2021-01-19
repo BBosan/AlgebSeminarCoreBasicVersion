@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +38,6 @@ namespace SeminarCore2
 
             services.AddDbContextPool<MojContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))/*, ServiceLifetime.Singleton*/);
 
-
             //Email: admin@admin.com
             //Password: admin
             //https://github.com/dotnet/aspnetcore/blob/b795ac3546eb3e2f47a01a64feb3020794ca33bb/src/Identity/Extensions.Core/src/PasswordOptions.cs
@@ -53,8 +54,6 @@ namespace SeminarCore2
             }).AddEntityFrameworkStores<MojContext>();
             #endregion
 
-
-
             #region MozeIliOvoGoreUAddIdentity
             //services.Configure<IdentityOptions>(opt =>
             //{
@@ -67,7 +66,18 @@ namespace SeminarCore2
             //}); 
             #endregion
 
-            services.AddMvc()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
+            services.AddMvc(
+            #region AuthorizeFilterOnWholeAppAkAGlobally
+            //options =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser().Build();
+
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+
+            //} 
+            #endregion
+            ).AddXmlSerializerFormatters()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
