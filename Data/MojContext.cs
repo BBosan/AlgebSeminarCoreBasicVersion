@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SeminarCore2.Data
 {
-    public class MojContext : IdentityDbContext
+    public class MojContext : IdentityDbContext<ApplicationUser> //appuser dodan kao generic param da bi se Grad mogao dodati u bazu
     {
         public MojContext(DbContextOptions<MojContext> options) : base(options)
         {
