@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SeminarCore2.Data;
+using SeminarCore2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace SeminarCore2
             //Password: admin
             //https://github.com/dotnet/aspnetcore/blob/b795ac3546eb3e2f47a01a64feb3020794ca33bb/src/Identity/Extensions.Core/src/PasswordOptions.cs
             #region MozeIliOvo
-            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireDigit = false;
                 opt.Password.RequiredLength = 3;
