@@ -67,7 +67,10 @@ namespace SeminarCore2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { 
+                    UserName = model.Email, Email = model.Email, Grad = model.Grad
+                };
+
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
