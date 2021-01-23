@@ -64,6 +64,10 @@ body {
     width:auto;
 }
 
+#create_role_button_style {
+    width: auto;
+}
+
 /*New*/
 /*.ml-auto .dropdown-menu {
     left: auto !important;
