@@ -38,7 +38,7 @@ namespace SeminarCore2.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "home");
+                    return RedirectToAction(nameof(AdminController.ListRoles), "admin");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -49,6 +49,13 @@ namespace SeminarCore2.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ListRoles() 
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
         }
 
     }
