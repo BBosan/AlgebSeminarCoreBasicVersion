@@ -68,6 +68,10 @@ body {
     width: auto;
 }
 
+.generic_width_auto{
+    width:auto;
+}
+
 /*New*/
 /*.ml-auto .dropdown-menu {
     left: auto !important;
