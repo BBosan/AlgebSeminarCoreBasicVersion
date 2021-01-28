@@ -1,1 +1,21 @@
-﻿<h1>Not Found</h1>
+﻿@{
+    ViewBag.Title = "Not Found";
+}
+
+<div class="d-block mt-5 alert-dark text-center" style="color:#c12727">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <h1>ErrorMessage: @ViewBag.ErrorMessage</h1>
+        if (ViewBag.QS != null && ViewBag.Path != null)
+        {
+            <h2>QueryString: @ViewBag.QS</h2>
+            <h3>Path: @ViewBag.Path</h3>
+        }
+    }
+    else
+    {
+        <h1>ERROR! Not Found!</h1>
+    }
+
+    <a class="btn btn-dark mb-1" asp-action="Index" asp-controller="Home">Bye</a>
+</div>
