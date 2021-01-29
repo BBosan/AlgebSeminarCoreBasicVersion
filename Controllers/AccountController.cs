@@ -113,6 +113,13 @@ namespace SeminarCore2.Controllers
         }
         #endregion
 
+        [HttpGet]
+        //[AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
 
     }
 }

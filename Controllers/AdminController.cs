@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace SeminarCore2.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "User")] //Both
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

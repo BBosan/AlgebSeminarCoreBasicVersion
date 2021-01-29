@@ -6,7 +6,7 @@
     @if (ViewBag.ErrorMessage != null)
     {
         <h1>ErrorMessage: @ViewBag.ErrorMessage</h1>
-        if (ViewBag.QS != null && ViewBag.Path != null)
+        if (ViewBag.QS != null || ViewBag.Path != null)
         {
             <h2>QueryString: @ViewBag.QS</h2>
             <h3>Path: @ViewBag.Path</h3>
