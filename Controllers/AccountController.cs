@@ -54,6 +54,7 @@ namespace SeminarCore2.Controllers
         }
 
 
+        #region Register
         [HttpGet]
         //[AllowAnonymous]
         public IActionResult Register()
@@ -67,15 +68,23 @@ namespace SeminarCore2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { 
-                    UserName = model.Email, Email = model.Email, Grad = model.Grad
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Grad = model.Grad
                 };
 
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                   await signInManager.SignInAsync(user, isPersistent: false);
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction(nameof(AdminController.ListUsers), "Admin");
+                    }
+
+                    await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
 
@@ -85,7 +94,8 @@ namespace SeminarCore2.Controllers
                 }
             }
             return View(model);
-        }
+        } 
+        #endregion
 
         [HttpPost]
         public async Task<IActionResult> Logout()

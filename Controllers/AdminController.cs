@@ -25,6 +25,7 @@ namespace SeminarCore2.Controllers
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
+
         #region CreateRole
 
         [HttpGet]
@@ -213,7 +214,12 @@ namespace SeminarCore2.Controllers
         }
         #endregion
 
-
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
 
     }
 }
