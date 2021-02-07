@@ -72,6 +72,10 @@ body {
     width:auto;
 }
 
+.display_none_generic{
+    display:none;
+}
+
 /*New*/
 /*.ml-auto .dropdown-menu {
     left: auto !important;

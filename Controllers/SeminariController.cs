@@ -93,7 +93,7 @@ namespace SeminarCore2.Controllers
         public async Task<IActionResult> Details(int? id)
         {
 
-            throw new Exception("Error In Detail VIew");
+            //throw new Exception("Error In Detail VIew");
 
             #region Info
             /*
