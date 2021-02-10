@@ -12,7 +12,9 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production" //bio Development ali da mogu testirati error controller treba production
+        "ASPNETCORE_ENVIRONMENT": "Production"
+        //bio Dev ali da mogu testirati error controller treba production
+        //Za Error2.cshtml radi i dev
       }
     },
     "SeminarCore2": {

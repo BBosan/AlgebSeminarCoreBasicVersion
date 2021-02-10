@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SeminarCore2.Data;
 using SeminarCore2.Models;
 using System;
@@ -141,23 +142,38 @@ namespace SeminarCore2.Controllers
             }
             else
             {
-                var result = await roleManager.DeleteAsync(role);
-
-                if (result.Succeeded)
+                #region TryCatch
+                try
                 {
-                    return RedirectToAction("ListRoles");
-                }
+                    //throw new Exception("TEST"); //testiram ErrorController
 
-                foreach (var error in result.Errors)
+                    var result = await roleManager.DeleteAsync(role);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListRoles");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return View("ListRoles");
+                }
+                catch (DbUpdateException ex)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                    ViewBag.ErrorTitle = $"{role.Name} role is in use!";
+                    ViewBag.ErrorMessage = $"{role.Name} cannot be deleted as there are users " +
+                        $"in this role. If you want to delete this role, please remove the users " +
+                        $"from the role first!";
 
-                return View("ListRoles");
+                    return View("Error2");
+                } 
+                #endregion
             }
         }
         #endregion
-
 
 
 
@@ -245,8 +261,6 @@ namespace SeminarCore2.Controllers
             return RedirectToAction("EditRole", new { Id = roleId });
         }
         #endregion
-
-
 
 
 
