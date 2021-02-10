@@ -129,6 +129,38 @@ namespace SeminarCore2.Controllers
         }
         #endregion
 
+        #region DeleteRole
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View("ListRoles");
+            }
+        }
+        #endregion
+
+
+
+
         #region EditUsersInRole
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
@@ -213,6 +245,10 @@ namespace SeminarCore2.Controllers
             return RedirectToAction("EditRole", new { Id = roleId });
         }
         #endregion
+
+
+
+
 
         #region EditUser
         [HttpGet]

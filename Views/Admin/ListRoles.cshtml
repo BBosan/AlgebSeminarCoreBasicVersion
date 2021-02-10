@@ -13,7 +13,7 @@
 
     foreach (var role in Model)
     {
-        <div class="card mb-3" style="width:50%">
+        <div class="card mb-3" style="width:70%">
             <div class="card-header">
                 Role Id : @role.Id.Substring(0, 15)...
             </div>
@@ -26,21 +26,26 @@
                 </div>*@
 
             <div class="card-footer btn-group">
-
-                <a class="btn btn-primary" 
-                        asp-action="EditRole" 
-                        asp-controller="Admin" 
-                        asp-route-id="@role.Id">
+                <form asp-action="DeleteRole" method="post" asp-route-id="@role.Id">
+                    <a class="btn btn-primary"
+                       asp-action="EditRole"
+                       asp-controller="Admin"
+                       asp-route-id="@role.Id">
                         Edit
-                </a>
+                    </a>
 
-                <a class="btn btn-danger"                        
-                        asp-action="DeleteRole" 
-                        asp-controller="Admin" 
-                        asp-route-id="@role.Id">
-                        Delete
-                </a>
+                    <!--Confirmation dialog-->
+                    <span id="confirmDeleteSpan_@role.Id" class="display_none_generic">
+                        <span>Are you sure you want to delete this role {@role.Name}?</span>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@role.Id', false)">No</a>
+                    </span>
 
+                    <span id="deleteSpan_@role.Id">
+                        <a href="#" class="btn btn-danger" onclick="confirmDelete('@role.Id', true)">Delete</a>
+                    </span>
+                    <!--Confirmation dialog END-->
+                </form>
             </div>
         </div>
     }
@@ -58,4 +63,8 @@ else
             </a>
         </div>
     </div>
+}
+
+@section Scripts{
+    <script src="~/js/CustomScript.js"></script>
 }

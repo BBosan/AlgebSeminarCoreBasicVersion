@@ -15,7 +15,7 @@
 
     foreach (var user in Model)
     {
-        <div class="card mb-3" style="width:50%">
+        <div class="card mb-3" style="width:70%">
             <div class="card-header">
                 User Id : @user.Id
             </div>
@@ -43,7 +43,6 @@
                     <a href="#" class="btn btn-danger" onclick="confirmDelete('@user.Id', true)">Delete</a>
                 </span>
                  <!--Confirmation dialog END-->
-
                 </form>
             </div>
         </div>
