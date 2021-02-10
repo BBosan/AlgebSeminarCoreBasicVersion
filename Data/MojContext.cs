@@ -24,6 +24,15 @@ namespace SeminarCore2.Data
             modelBuilder.Entity<Seminar>().ToTable("Seminar");
             modelBuilder.Entity<Predbiljezba>().ToTable("Predbiljezba");
             modelBuilder.Entity<Zaposlenik>().ToTable("Zaposlenik");
+
+            #region ON DELETE TO NO ACTION - Default Je Cascade
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+                    .SelectMany(x => x.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            } 
+            #endregion
+
         }
 
     }
