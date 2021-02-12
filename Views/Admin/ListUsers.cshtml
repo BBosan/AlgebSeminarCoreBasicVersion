@@ -37,11 +37,11 @@
                     <span id="confirmDeleteSpan_@user.Id" class="display_none_generic">
                         <span>Are you sure you want to delete this user {@user.UserName}?</span>
                         <button type="submit" class="btn btn-danger">Yes</button>
-                        <a href="#" data-iduser="@user.Id" class="nope btn btn-primary">No</a> <!-- onclick="confirmDelete('@@user.Id', false)"-->
+                        <button type="button" data-iduser="@user.Id" class="nope btn btn-primary">No</button> <!-- onclick="confirmDelete('@@user.Id', false)"-->
                     </span>
 
                     <span id="deleteSpan_@user.Id">
-                        <a href="#" data-iduser="@user.Id" class="del btn btn-danger">Delete</a> <!-- onclick="confirmDelete('@@user.Id', true)"-->
+                        <button type="button" data-iduser="@user.Id" class="del btn btn-danger">Delete</button> <!-- onclick="confirmDelete('@@user.Id', true)"-->
                     </span>
                     <!--Confirmation dialog END-->
                 </form>
