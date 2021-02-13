@@ -29,7 +29,19 @@ namespace SeminarCore2.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ListRoles() 
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
+        }
 
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
 
         #region CreateRole
 
@@ -64,22 +76,8 @@ namespace SeminarCore2.Controllers
             }
 
             return View(model);
-        } 
+        }
         #endregion
-
-        [HttpGet]
-        public IActionResult ListRoles() 
-        {
-            var roles = roleManager.Roles;
-            return View(roles);
-        }
-
-        [HttpGet]
-        public IActionResult ListUsers()
-        {
-            var users = userManager.Users;
-            return View(users);
-        }
 
         #region EditRole
         [HttpGet]
@@ -511,7 +509,6 @@ namespace SeminarCore2.Controllers
             return RedirectToAction("EditUser", new { Id = model.UserId });
         }
         #endregion
-
 
     }
 }
