@@ -76,9 +76,24 @@ namespace SeminarCore2
 
             //    options.Filters.Add(new AuthorizeFilter(policy));
 
-            //} 
+            //}
             #endregion
             ).AddXmlSerializerFormatters()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
+
+            services.AddAuthorization(options =>
+            {
+                //options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin" , "User"));
+
+                options.AddPolicy("DeleteRolePolicy",
+                    policy => policy.RequireClaim("Delete Role")/*.RequireClaim("Edit Role")*/);
+
+                options.AddPolicy("EditRolePolicy",
+                    policy => policy.RequireClaim("Edit Role"));
+
+                options.AddPolicy("CreateRolePolicy",
+                    policy => policy.RequireClaim("Create Role"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
