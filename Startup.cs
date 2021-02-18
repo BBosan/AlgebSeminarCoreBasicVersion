@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SeminarCore2.Controllers;
 using SeminarCore2.Data;
 using SeminarCore2.Models;
 using System;
@@ -79,10 +80,15 @@ namespace SeminarCore2
             #endregion
             ).AddXmlSerializerFormatters()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString($"/Admin/{nameof(AdminController.AccessDenied)}");
+            });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("DeleteRolePolicy",
-                    policy => policy.RequireClaim("Delete Role")/*.RequireClaim("Edit Role")*/);
+                    policy => policy.RequireClaim("Delete Role", "true")/*.RequireClaim("Edit Role")*/);
 
                 options.AddPolicy("EditRolePolicy",
                     policy => policy.RequireAssertion(context => 
@@ -91,7 +97,7 @@ namespace SeminarCore2
                     context.User.IsInRole("Super Admin")));
 
                 options.AddPolicy("CreateRolePolicy",
-                    policy => policy.RequireClaim("Create Role"));
+                    policy => policy.RequireClaim("Create Role", "true"));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"/*, "User"*/));
 
