@@ -87,8 +87,17 @@ namespace SeminarCore2
 
             services.AddAuthorization(options =>
             {
+                //options.AddPolicy("DeleteRolePolicy",
+                //    policy => policy.RequireClaim("Delete Role", "true")/*.RequireClaim("Edit Role")*/);
+
+                //options.AddPolicy("CreateRolePolicy",
+                //    policy => policy.RequireClaim("Create Role", "true"));
+
                 options.AddPolicy("DeleteRolePolicy",
-                    policy => policy.RequireClaim("Delete Role", "true")/*.RequireClaim("Edit Role")*/);
+                    policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Admin") &&
+                    context.User.HasClaim(claim => claim.Type == "Delete Role" && claim.Value == "true") ||
+                    context.User.IsInRole("Super Admin")));
 
                 options.AddPolicy("EditRolePolicy",
                     policy => policy.RequireAssertion(context => 
@@ -97,7 +106,10 @@ namespace SeminarCore2
                     context.User.IsInRole("Super Admin")));
 
                 options.AddPolicy("CreateRolePolicy",
-                    policy => policy.RequireClaim("Create Role", "true"));
+                    policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Admin") &&
+                    context.User.HasClaim(claim => claim.Type == "Create Role" && claim.Value == "true") ||
+                    context.User.IsInRole("Super Admin")));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"/*, "User"*/));
 
