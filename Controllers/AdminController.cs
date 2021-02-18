@@ -14,7 +14,7 @@ namespace SeminarCore2.Controllers
 {
     //[Authorize(Roles = "Admin")]
     //[Authorize(Roles = "User")] //Both
-    [Authorize(Policy = "AdminRolePolicy")]
+    //[Authorize(Policy = "AdminRolePolicy")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -295,7 +295,7 @@ namespace SeminarCore2.Controllers
                 Email = user.Email,
                 UserName = user.UserName,
                 Grad = user.Grad,
-                Claims = userClaims.Select(x => x.Value).ToList(),
+                Claims = userClaims.Select(x => x.Type + " : " + x.Value).ToList(),
                 Roles = userRoles
             };
 
@@ -467,7 +467,7 @@ namespace SeminarCore2.Controllers
 
                 //if the user has the claim, set IsSelected property to true, so the checkbox
                 //next to the claim is checked on the UI
-                if (existingUserClaims.Any(x => x.Type == claim.Type))
+                if (existingUserClaims.Any(x => x.Type == claim.Type && x.Value == "true"))
                 {
                     userClaim.IsSelected = true;
                 }
@@ -501,8 +501,8 @@ namespace SeminarCore2.Controllers
 
             // Add all the claims that are selected on the UI
             result = await userManager.AddClaimsAsync(user, model.Claims
-                .Where(c => c.IsSelected)
-                .Select(c => new Claim(c.ClaimType, c.ClaimType)));
+                //.Where(c => c.IsSelected)
+                .Select(c => new Claim(c.ClaimType, c.IsSelected ? "true" : "false")));
 
             if (!result.Succeeded)
             {

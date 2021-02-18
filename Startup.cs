@@ -85,7 +85,10 @@ namespace SeminarCore2
                     policy => policy.RequireClaim("Delete Role")/*.RequireClaim("Edit Role")*/);
 
                 options.AddPolicy("EditRolePolicy",
-                    policy => policy.RequireClaim("Edit Role"));
+                    policy => policy.RequireAssertion(context => 
+                    context.User.IsInRole("Admin") && 
+                    context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") ||
+                    context.User.IsInRole("Super Admin")));
 
                 options.AddPolicy("CreateRolePolicy",
                     policy => policy.RequireClaim("Create Role"));
