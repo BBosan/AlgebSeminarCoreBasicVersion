@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SeminarCore2.Models;
 using System;
@@ -31,6 +32,7 @@ namespace SeminarCore2.Controllers
 
         //GLOBAL
         [Route("Error")]
+        [AllowAnonymous]
         public IActionResult Error()
         {
             #region VerzijaSaViseDetalja

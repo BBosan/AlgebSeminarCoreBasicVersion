@@ -69,21 +69,18 @@ namespace SeminarCore2
 
             services.AddMvc(
             #region AuthorizeFilterOnWholeAppAkAGlobally
-            //options =>
-            //{
-            //    var policy = new AuthorizationPolicyBuilder()
-            //    .RequireAuthenticatedUser().Build();
-
-            //    options.Filters.Add(new AuthorizeFilter(policy));
-
-            //}
+            //https://www.youtube.com/watch?v=uET7MjhUeY4
+            options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }
             #endregion
             ).AddXmlSerializerFormatters()/*.SetCompatibilityVersion(CompatibilityVersion.Version_2_2)*/;
 
             services.AddAuthorization(options =>
             {
-                //options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin" , "User"));
-
                 options.AddPolicy("DeleteRolePolicy",
                     policy => policy.RequireClaim("Delete Role")/*.RequireClaim("Edit Role")*/);
 
@@ -92,6 +89,9 @@ namespace SeminarCore2
 
                 options.AddPolicy("CreateRolePolicy",
                     policy => policy.RequireClaim("Create Role"));
+
+                options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"/*, "User"*/));
+
             });
 
         }

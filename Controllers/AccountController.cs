@@ -23,14 +23,14 @@ namespace SeminarCore2.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -41,6 +41,7 @@ namespace SeminarCore2.Controllers
                 {
                     if (!string.IsNullOrEmpty(returnUrl)/* && Url.IsLocalUrl(returnUrl)*/)
                     {
+                        //return Redirect(returnUrl);
                         return LocalRedirect(returnUrl);
                     }
                     else
@@ -56,14 +57,14 @@ namespace SeminarCore2.Controllers
 
         #region Register
         [HttpGet]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

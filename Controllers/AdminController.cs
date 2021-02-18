@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace SeminarCore2.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     //[Authorize(Roles = "User")] //Both
+    [Authorize(Policy = "AdminRolePolicy")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -21,8 +22,7 @@ namespace SeminarCore2.Controllers
 
         public AdminController(
             RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager
-            )
+            UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
