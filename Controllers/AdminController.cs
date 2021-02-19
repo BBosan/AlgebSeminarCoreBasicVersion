@@ -15,6 +15,8 @@ namespace SeminarCore2.Controllers
     //[Authorize(Roles = "Admin")]
     //[Authorize(Roles = "User")] //Both
     //[Authorize(Policy = "AdminRolePolicy")]
+
+    //Ne treba jer je globalno u startupu
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -82,7 +84,7 @@ namespace SeminarCore2.Controllers
 
         #region EditRole
         [HttpGet]
-        [Authorize(Policy = "EditRolePolicy")]
+        //[Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -112,7 +114,7 @@ namespace SeminarCore2.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy = "EditRolePolicy")]
+        //[Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);
@@ -368,6 +370,7 @@ namespace SeminarCore2.Controllers
         #region ManageUserRoles
 
         [HttpGet]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
             ViewBag.userId = userId;
@@ -407,6 +410,7 @@ namespace SeminarCore2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
             var user = await userManager.FindByIdAsync(userId);

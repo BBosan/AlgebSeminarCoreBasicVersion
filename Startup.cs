@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SeminarCore2.Controllers;
 using SeminarCore2.Data;
+using SeminarCore2.Extra;
+using SeminarCore2.Extra.Security;
 using SeminarCore2.Models;
 using System;
 using System.Collections.Generic;
@@ -99,11 +101,16 @@ namespace SeminarCore2
                     context.User.HasClaim(claim => claim.Type == "Delete Role" && claim.Value == "true") ||
                     context.User.IsInRole("Super Admin")));
 
+                #region Old
+                //options.AddPolicy("EditRolePolicy",
+                //    policy => policy.RequireAssertion(context => 
+                //    context.User.IsInRole("Admin") && 
+                //    context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") ||
+                //    context.User.IsInRole("Super Admin"))); 
+                #endregion
+
                 options.AddPolicy("EditRolePolicy",
-                    policy => policy.RequireAssertion(context => 
-                    context.User.IsInRole("Admin") && 
-                    context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") ||
-                    context.User.IsInRole("Super Admin")));
+                    policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement())); //custom handler
 
                 options.AddPolicy("CreateRolePolicy",
                     policy => policy.RequireAssertion(context =>
@@ -115,6 +122,7 @@ namespace SeminarCore2
 
             });
 
+            services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
