@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Edit";
+
+    var selectList = new List<SelectListItem>() {
+        new SelectListItem { Text = "Neobradjen", Value = "" },
+        new SelectListItem { Text = "Odobren", Value = "true", Selected = (Model.StatusDaNe.HasValue && Model.StatusDaNe.Value) },
+        new SelectListItem { Text = "Odbijen", Value = "false", Selected = (Model.StatusDaNe.HasValue && !Model.StatusDaNe.Value) }
+    };
 }
 
 <h1>Edit</h1>
@@ -43,11 +49,18 @@
                 <input asp-for="BrojTelefona" class="form-control" />
                 <span asp-validation-for="BrojTelefona" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label asp-for="StatusDaNe" class="control-label"></label>
+            <input asp-for="StatusDaNe" class="form-control" />
+            <span asp-validation-for="StatusDaNe" class="text-danger"></span>
+            </div>*@
+
             <div class="form-group">
                 <label asp-for="StatusDaNe" class="control-label"></label>
-                <input asp-for="StatusDaNe" class="form-control" />
+                <select asp-for="StatusDaNe" class="form-control" asp-items="@selectList"></select>
                 <span asp-validation-for="StatusDaNe" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="SeminarID" class="control-label"></label>
                 <select asp-for="SeminarID" class="form-control" asp-items="ViewBag.SeminarID"></select>
