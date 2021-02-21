@@ -2,6 +2,7 @@
 
 @{
     var userId = ViewBag.userId;
+    ViewData["Title"] = "Manage User Roles";
 }
 
 <form method="post">
@@ -24,7 +25,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
-            <input type="submit" value="Update" class="generic_width_auto btn btn-primary"/>
+            <input type="submit" value="Update" class="generic_width_auto btn btn-primary" />
             <a asp-action="EditUser" asp-route-id="@userId"
                class="generic_width_auto btn btn-primary">Cancel</a>
         </div>

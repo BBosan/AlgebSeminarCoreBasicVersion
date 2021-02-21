@@ -1,5 +1,9 @@
 ﻿@model UserClaimsViewModel
 
+@{
+    ViewData["Title"] = "Manage User Claims";
+}
+
 <form method="post">
     <div class="card">
         <div class="card-header">
@@ -22,7 +26,7 @@
             <input type="submit" value="Update" class="btn btn-primary"
                    style="width:auto" />
             <a asp-action="EditUser" asp-route-id="@Model.UserId"
-               class="generic_width_auto btn btn-primary" >Cancel</a>
+               class="generic_width_auto btn btn-primary">Cancel</a>
         </div>
     </div>
 </form>

@@ -29,6 +29,12 @@ namespace SeminarCore2.Extra.Security
             {
                 context.Succeed(requirement);
             }
+            #region NotUseful
+            //else
+            //{
+            //    context.Fail();
+            //} 
+            #endregion
 
             return Task.CompletedTask;
         }

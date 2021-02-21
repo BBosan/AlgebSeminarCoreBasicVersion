@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ApplicationUser>
 
 @{
-    ViewBag.Title = "All Users";
+    ViewData["Title"] = "All Users";
 }
 
 <h1>All Users</h1>
@@ -85,7 +85,7 @@ else
             //span[id^='deleteSpan']
             $(".del").on("click", function () {
                 var id_user = $(this).data("iduser");
-                var id_user_short = id_user.substring(0, 10)+"...";
+                var id_user_short = id_user.substring(0, 10) + "...";
                 confirmDelete(id_user, true)
 
                 $("h1").text(id_user_short);

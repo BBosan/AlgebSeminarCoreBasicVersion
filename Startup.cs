@@ -89,11 +89,13 @@ namespace SeminarCore2
 
             services.AddAuthorization(options =>
             {
+                #region Old
                 //options.AddPolicy("DeleteRolePolicy",
                 //    policy => policy.RequireClaim("Delete Role", "true")/*.RequireClaim("Edit Role")*/);
 
                 //options.AddPolicy("CreateRolePolicy",
-                //    policy => policy.RequireClaim("Create Role", "true"));
+                //    policy => policy.RequireClaim("Create Role", "true")); 
+                #endregion
 
                 options.AddPolicy("DeleteRolePolicy",
                     policy => policy.RequireAssertion(context =>
@@ -117,6 +119,10 @@ namespace SeminarCore2
                     context.User.IsInRole("Admin") &&
                     context.User.HasClaim(claim => claim.Type == "Create Role" && claim.Value == "true") ||
                     context.User.IsInRole("Super Admin")));
+
+                #region NotUseful
+                //options.InvokeHandlersAfterFailure = false; 
+                #endregion
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"/*, "User"*/));
 
