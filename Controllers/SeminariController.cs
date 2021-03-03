@@ -75,13 +75,15 @@ namespace SeminarCore2.Controllers
                     break;
             }
 
+            
+
             #region INFO
             /*
             The PaginatedList.CreateAsync method takes a page number. The two question marks represent the 
             null-coalescing operator. The null-coalescing operator defines a default value for a nullable type; 
             the expression (pageNumber ?? 1) means return the value of pageNumber if it has a value,
             or return 1 if pageNumber is null. 
-            */ 
+            */
             #endregion
             int pageSize = 2;
             return View(await PaginatedList<Seminar>.CreateAsync(seminari.AsNoTracking(), pageNumber ?? 1, pageSize));

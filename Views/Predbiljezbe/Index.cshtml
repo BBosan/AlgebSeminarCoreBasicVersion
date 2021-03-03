@@ -2,6 +2,22 @@
 
 @{
     ViewData["Title"] = "Predbiljezbe";
+
+    string StatusDaNe(bool? status, bool statusText=false)
+    {
+        string output = "";
+
+        if (statusText)
+        {
+            output = (status == false ? "Odbijen" : !status.HasValue ? "Neobradjen" : "Odobren");
+        }
+        else
+        {
+            output = (status == false ? "color:crimson" : !status.HasValue ? "color:seagreen" : "color:royalblue");
+        }
+        return output;
+    }
+
 }
 
 <h1>Predbiljezbe</h1>
@@ -68,8 +84,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BrojTelefona)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusDaNe)
+            <td style="color:">
+                <span style=@(StatusDaNe(item.StatusDaNe))>
+                    @(StatusDaNe(item.StatusDaNe, statusText: true))
+                </span>
+                @*@Html.DisplayFor(modelItem => item.StatusDaNe)*@
+                @*<span style=@(item.StatusDaNe == false ? "color:crimson" : !item.StatusDaNe.HasValue ? "color:seagreen" : "color:royalblue" )>
+                    @(item.StatusDaNe == false ? "Odbijen" : !item.StatusDaNe.HasValue ? "Neobradjen" : "Odobren")
+                </span>*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Seminar.Naziv)

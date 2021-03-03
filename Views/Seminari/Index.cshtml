@@ -2,6 +2,21 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    string StatusDaNe(bool? status, bool statusText = false)
+    {
+        string output = "";
+
+        if (statusText)
+        {
+            output = (status == false ? "Otvoren" : "Zatvoren");
+        }
+        else
+        {
+            output = (status == false ? "color:royalblue" : "color:crimson");
+        }
+        return output;
+    }
 }
 
 <h1>Index</h1>
@@ -63,7 +78,13 @@
                     @Html.DisplayFor(modelItem => item.Datum)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PopunjenDaNe)
+                    <span style=@(StatusDaNe(item.PopunjenDaNe))>
+                        @(StatusDaNe(item.PopunjenDaNe, statusText: true))
+                    </span>
+                    @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
+                    @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
+                        @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
+                    </span>*@
                 </td>
                 <td>
                     @if (item.Predbiljezbe.Count > 0)
