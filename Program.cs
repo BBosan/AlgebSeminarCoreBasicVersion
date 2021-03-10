@@ -19,34 +19,44 @@ namespace Seminar_Core_2._2
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-
-            CreateDbIfNotExists(host);
-
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        private static void CreateDbIfNotExists(IWebHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
 
-                try
-                {
-                    var context = services.GetRequiredService<MojContext>();
-                    //context.Database.Migrate();
-                    DbInitializer.Initialize(/*(MojContext)services*/context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred seeding the DB.");
-                }
-            }
-        }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) => WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+        //public static void Main(string[] args)
+        //{
+        //var host = CreateWebHostBuilder(args).Build();
+
+        //CreateDbIfNotExists(host);
+
+        //host.Run();
+        //}
+
+        //private static void CreateDbIfNotExists(IWebHost host)
+        //{
+        //    using (var scope = host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
+
+        //        try
+        //        {
+        //            var context = services.GetRequiredService<MojContext>();
+        //            //context.Database.Migrate();
+        //            DbInitializer.Initialize(/*(MojContext)services*/context);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            var logger = services.GetRequiredService<ILogger<Program>>();
+        //            logger.LogError(ex, "An error occurred seeding the DB.");
+        //        }
+        //    }
+        //}
+
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) => WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
 
     }
 }

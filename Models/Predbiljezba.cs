@@ -8,6 +8,7 @@ namespace SeminarCore2.Models
 {
     public class Predbiljezba
     {
+        //[Key]
         public int PredbiljezbaID { get; set; }
 
         [Display(Name = "Datum Rođ."), DataType(DataType.Date)]
@@ -15,12 +16,12 @@ namespace SeminarCore2.Models
         public DateTime Datum { get; set; }
 
         [MinLength(2, ErrorMessage = "{0} mora biti duze od 1")]
-        [StringLength(maximumLength: 10, ErrorMessage = "{0} je predugacko")]
+        [StringLength(maximumLength: 20, ErrorMessage = "{0} je predugacko")]
         [Required]
         public string Ime { get; set; }
 
         [MinLength(2, ErrorMessage = "{0} mora biti duze od 1")]
-        [StringLength(maximumLength: 20, ErrorMessage = "{0} je predugacko")]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} je predugacko")]
         [Required]
         public string Prezime { get; set; }
 
