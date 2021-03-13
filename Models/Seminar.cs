@@ -15,9 +15,11 @@ namespace SeminarCore2.Models
         #region REGEX
         /*
         The StringLength attribute won't prevent a user from entering white space for a name. You can use the RegularExpression attribute to apply restrictions to the input. For example, the following code requires the first character to be upper case and the remaining characters to be alphabetical:
-        */ 
+        */
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         #endregion
-        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z0-9,-.@~!#+$%&*<>?:;_='/()]+(\s+[a-zA-Z0-9,-.@~!#+$%&*<>?:;_='/()]+)*$", ErrorMessage = "No Whitespace at Start/End and the first letter must be uppercase!")]
+        //[RegularExpression(@"^[^\s].+[^\s]$")] //no space
         public string Naziv { get; set; }
         [Required]
         [StringLength(50)]

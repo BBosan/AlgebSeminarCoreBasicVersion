@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Predbiljezbe";
 
-    string StatusDaNe(bool? status, bool statusText=false)
+    string StatusDaNe(bool? status, bool statusText = false)
     {
         string output = "";
 
@@ -26,12 +26,12 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.PredbiljezbaID)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.PredbiljezbaID)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Datum)
             </th>
@@ -60,48 +60,50 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.PredbiljezbaID)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Datum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prezime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adresa)
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.Email)*@
-                <a href="mailto:@(item.Email)?Subject=Hello%20@(item.Ime)" target="_top">@@</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrojTelefona)
-            </td>
-            <td>
-                <span style=@(StatusDaNe(item.StatusDaNe))>
-                    @(StatusDaNe(item.StatusDaNe, statusText: true))
-                </span>
-                @*@Html.DisplayFor(modelItem => item.StatusDaNe)*@
-                @*<span style=@(item.StatusDaNe == false ? "color:crimson" : !item.StatusDaNe.HasValue ? "color:seagreen" : "color:royalblue" )>
-                    @(item.StatusDaNe == false ? "Odbijen" : !item.StatusDaNe.HasValue ? "Neobradjen" : "Odobren")
-                </span>*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seminar.Naziv)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PredbiljezbaID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PredbiljezbaID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PredbiljezbaID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.PredbiljezbaID)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresa)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Email)*@
+                    <a href="mailto:@(item.Email)?Subject=Hello%20@(item.Ime)" target="_top">@@</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojTelefona)
+                </td>
+                <td>
+                    <span style=@(StatusDaNe(item.StatusDaNe))>
+                        @(StatusDaNe(item.StatusDaNe, statusText: true))
+                    </span>
+                    @*@Html.DisplayFor(modelItem => item.StatusDaNe)*@
+                    @*<span style=@(item.StatusDaNe == false ? "color:crimson" : !item.StatusDaNe.HasValue ? "color:seagreen" : "color:royalblue" )>
+                            @(item.StatusDaNe == false ? "Odbijen" : !item.StatusDaNe.HasValue ? "Neobradjen" : "Odobren")
+                        </span>*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seminar.Naziv)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PredbiljezbaID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PredbiljezbaID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PredbiljezbaID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

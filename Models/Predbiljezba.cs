@@ -18,11 +18,13 @@ namespace SeminarCore2.Models
         [MinLength(2, ErrorMessage = "{0} mora biti duze od 1")]
         [StringLength(maximumLength: 20, ErrorMessage = "{0} je predugacko")]
         [Required]
+        [RegularExpression(/*@"^[A-Z]+[a-zA-Z]*$"*/ @"^[A-Z]+[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$", ErrorMessage = "First letter must be UPPERCASE + no whitespace at start/end")]
         public string Ime { get; set; }
 
         [MinLength(2, ErrorMessage = "{0} mora biti duze od 1")]
         [StringLength(maximumLength: 30, ErrorMessage = "{0} je predugacko")]
         [Required]
+        [RegularExpression(/*@"^[A-Z]+[a-zA-Z]*$"*/ @"^[A-Z]+[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$", ErrorMessage = "First letter must be UPPERCASE + no whitespace at start/end")]
         public string Prezime { get; set; }
 
         [Required]
