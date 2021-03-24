@@ -32,7 +32,7 @@ namespace SeminarCore2.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> About()
+        public async Task<ActionResult> Stats()
         {
             IQueryable<EnrollmentDateGroup> data =
             from sem in _context.Seminari

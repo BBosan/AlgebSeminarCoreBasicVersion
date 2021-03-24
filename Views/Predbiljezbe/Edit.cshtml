@@ -49,6 +49,7 @@
                 <input asp-for="BrojTelefona" class="form-control" />
                 <span asp-validation-for="BrojTelefona" class="text-danger"></span>
             </div>
+
             @*<div class="form-group">
             <label asp-for="StatusDaNe" class="control-label"></label>
             <input asp-for="StatusDaNe" class="form-control" />
@@ -63,7 +64,7 @@
 
             <div class="form-group">
                 <label asp-for="Seminar" class="control-label"></label>
-                <select asp-for="SeminarID" class="form-control" asp-items="ViewBag.SeminarID"></select>
+                <select asp-for="SeminarID" class="form-control" asp-items="(SelectList)@ViewData["SeminarID"]"></select> <!--moze i ViewBag.SeminarID-->
                 <span asp-validation-for="SeminarID" class="text-danger"></span>
             </div>
             <div class="form-group">

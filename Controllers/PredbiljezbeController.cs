@@ -51,10 +51,16 @@ namespace SeminarCore2.Controllers
         }
 
         // GET: Predbiljezbas/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            var model = new Predbiljezba()
+            {
+                Datum = DateTime.Now,
+                SeminarID = id ?? -1
+            };
+
             ViewData["SeminarID"] = new SelectList(_context.Seminari, "SeminarID", "Naziv");
-            return View();
+            return View(model);
         }
 
         // POST: Predbiljezbas/Create
