@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace SeminarCore2.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly MojContext _context;
@@ -21,6 +22,7 @@ namespace SeminarCore2.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -31,7 +33,7 @@ namespace SeminarCore2.Controllers
             return View();
         }
 
-        [Authorize]
+
         public async Task<ActionResult> Stats()
         {
             IQueryable<EnrollmentDateGroup> data =

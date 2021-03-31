@@ -1,4 +1,5 @@
 ﻿@model SeminarCore2.Models.Predbiljezba
+@inject SignInManager<ApplicationUser> signInManager
 
 @{
     ViewData["Title"] = "Create";
@@ -49,22 +50,30 @@
                 <span asp-validation-for="BrojTelefona" class="text-danger"></span>
             </div>
 
-            @*<div class="form-group">
+            @*
+            <div class="form-group">
             <label asp-for="StatusDaNe" class="control-label"></label>
             <input asp-for="StatusDaNe" class="form-control" />
             <span asp-validation-for="StatusDaNe" class="text-danger"></span>
-            </div>*@
-
-            <div class="form-group">
-                <label asp-for="StatusDaNe" class="control-label"></label>
-                <select asp-for="StatusDaNe" class="form-control" asp-items="@selectList"></select>
-                <span asp-validation-for="StatusDaNe" class="text-danger"></span>
             </div>
+            *@
+
+            @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
+            {
+                <div class="form-group">
+                    <label asp-for="StatusDaNe" class="control-label"></label>
+                    <select asp-for="StatusDaNe" class="form-control" asp-items="@selectList"></select>
+                    <span asp-validation-for="StatusDaNe" class="text-danger"></span>
+                </div>
+            }
 
             <div class="form-group">
                 <label asp-for="Seminar" class="control-label"></label>
                 <select asp-for="SeminarID" class="form-control" asp-items="ViewBag.SeminarID">
-                    <option disabled value="-1">Please select one</option>
+                    @if (Model.SeminarID == -1)
+                    {
+                        <option disabled value="-1">Please select one</option>
+                    }
                 </select>
                 <span asp-validation-for="SeminarID" class="text-danger"></span>
             </div>

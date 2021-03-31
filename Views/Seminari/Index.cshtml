@@ -1,4 +1,5 @@
 ﻿@model PaginatedList<SeminarCore2.Models.Seminar>
+@inject SignInManager<ApplicationUser> signInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -85,8 +86,8 @@
                     </span>
                     @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
                     @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
-                        @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
-                    </span>*@
+                            @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
+                        </span>*@
                 </td>
                 <td>
                     @if (item.Predbiljezbe.Count > 0)
@@ -99,10 +100,19 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Create" asp-controller="Predbiljezbe" asp-route-id="@item.SeminarID">Upisi</a> |
-                    <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a>
+                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
+                    {
+                        <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> <text>|</text>
+                        <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> <text>|</text>
+                        <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a> <text>|</text>
+                    }
+
+                    <a asp-action="Create" asp-controller="Predbiljezbe" asp-route-id="@item.SeminarID">Upisi</a>
+                    @*
+                       <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> |
+                      <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> |
+                      <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a>
+                    *@
                 </td>
             </tr>
         }

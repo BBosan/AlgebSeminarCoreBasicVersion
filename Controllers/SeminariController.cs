@@ -23,6 +23,7 @@ namespace SeminarCore2.Controllers
         }
 
         // GET: Seminars
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
 
