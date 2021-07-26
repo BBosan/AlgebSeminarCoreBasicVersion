@@ -11,7 +11,7 @@ using SeminarCore2.Models;
 
 namespace SeminarCore2.Controllers
 {
-    public class PredbiljezbeController : Controller
+public class PredbiljezbeController : Controller
     {
         private readonly MojContext _context;
 

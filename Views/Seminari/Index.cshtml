@@ -4,20 +4,20 @@
 @{
     ViewData["Title"] = "Index";
 
-    string StatusDaNe(bool? status, bool statusText = false)
-    {
-        string output = "";
+    //string StatusDaNe(bool? status, bool statusText = false)
+    //{
+    //    string output = "";
 
-        if (statusText)
-        {
-            output = (status == false ? "Otvoren" : "Zatvoren");
-        }
-        else
-        {
-            output = (status == false ? "color:royalblue" : "color:crimson");
-        }
-        return output;
-    }
+    //    if (statusText)
+    //    {
+    //        output = (status == false ? "Otvoren" : "Zatvoren");
+    //    }
+    //    else
+    //    {
+    //        output = (status == false ? "color:royalblue" : "color:crimson");
+    //    }
+    //    return output;
+    //}
 
 }
 
@@ -87,8 +87,8 @@
                     @Html.DisplayFor(modelItem => item.Datum)
                 </td>
                 <td>
-                    <span style=@(StatusDaNe(item.PopunjenDaNe))>
-                        @(StatusDaNe(item.PopunjenDaNe, statusText: true))
+                    <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
+                        @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
                     </span>
                     @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
                     @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>

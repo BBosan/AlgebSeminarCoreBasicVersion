@@ -3,20 +3,20 @@
 @{
     ViewData["Title"] = "Predbiljezbe";
 
-    string StatusDaNe(bool? status, bool statusText = false)
-    {
-        string output = "";
+    //string StatusDaNe(bool? status, bool statusText = false)
+    //{
+    //    string output = "";
 
-        if (statusText)
-        {
-            output = (status == false ? "Odbijen" : !status.HasValue ? "Neobradjen" : "Odobren");
-        }
-        else
-        {
-            output = (status == false ? "color:crimson" : !status.HasValue ? "color:seagreen" : "color:royalblue");
-        }
-        return output;
-    }
+    //    if (statusText)
+    //    {
+    //        output = (status == false ? "Odbijen" : !status.HasValue ? "Neobradjen" : "Odobren");
+    //    }
+    //    else
+    //    {
+    //        output = (status == false ? "color:crimson" : !status.HasValue ? "color:seagreen" : "color:royalblue");
+    //    }
+    //    return output;
+    //}
 
 }
 
@@ -86,8 +86,8 @@
                     @Html.DisplayFor(modelItem => item.BrojTelefona)
                 </td>
                 <td>
-                    <span style=@(StatusDaNe(item.StatusDaNe))>
-                        @(StatusDaNe(item.StatusDaNe, statusText: true))
+                    <span style=@(GlobalFunctions.StatusDaNe(item.StatusDaNe, kontroler: "predb"))>
+                        @(GlobalFunctions.StatusDaNe(item.StatusDaNe, statusText: true, kontroler: "predb"))
                     </span>
                     @*@Html.DisplayFor(modelItem => item.StatusDaNe)*@
                     @*<span style=@(item.StatusDaNe == false ? "color:crimson" : !item.StatusDaNe.HasValue ? "color:seagreen" : "color:royalblue" )>

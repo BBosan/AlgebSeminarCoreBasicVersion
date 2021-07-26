@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <None Remove="--------------NASTAVIT Filter by status i edit DETAILS od predbilj.txt" />
+    <None Remove="--------------NASTAVIT.txt" />
   </ItemGroup>
 
 
