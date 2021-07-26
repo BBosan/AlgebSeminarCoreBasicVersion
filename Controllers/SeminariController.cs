@@ -24,7 +24,7 @@ namespace SeminarCore2.Controllers
 
         // GET: Seminars
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber, string currentStatus, string status)
         {
 
             ViewData["CurrentSort"] = sortOrder;
@@ -40,9 +40,21 @@ namespace SeminarCore2.Controllers
             else
             {
                 searchString = currentFilter;
+               
             }
 
+            if (status != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                status = currentStatus;
+            }
+
+
             ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentStatus"] = status;
 
             var seminari = from s in _context.Seminari
                             .Include(x => x.Predbiljezbe) //dodao
@@ -50,9 +62,38 @@ namespace SeminarCore2.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                seminari = seminari.Where(s => s.Naziv.Contains(searchString)
-                                       || s.Opis.Contains(searchString));
+                seminari = seminari.Where(s =>
+                                          s.Naziv.Contains(searchString)
+                                       || s.Opis.Contains(searchString)
+                                       );
             }
+
+            #region Redundant
+            //ViewBag.PopunjenDaNeDD = new List<SelectListItem>{
+            //    new SelectListItem() {Text = "Svi", Value="", Selected = string.IsNullOrEmpty(popunjenDaNe)},
+            //    new SelectListItem() {Text = "Otvoreni", Value="Otvoreni", Selected = (popunjenDaNe == "Otvoreni") /*bool.TrueString*/},
+            //    new SelectListItem() {Text = "Zatvoreni", Value="Zatvoreni", Selected = (popunjenDaNe == "Zatvoreni") }
+            //}; 
+            #endregion
+
+            #region DropDownFilterStatus
+            var options = new SelectListItem[]{
+                new SelectListItem() { Text = "Svi", Value = ""},
+                new SelectListItem() { Text = "Otvoreni", Value = "Otvoreni" },
+                new SelectListItem() { Text = "Zatvoreni", Value = "Zatvoreni" }
+            };
+
+            ViewBag.statusDropDown = new SelectList(options, "Value", "Text", status);
+
+            if (!String.IsNullOrEmpty(status))
+            {
+                seminari = seminari.Where(x => x.PopunjenDaNe == (status == "Zatvoreni"));
+                #region Test
+                //seminari = seminari.Where(x => (x.PopunjenDaNe == false ? "Otvoreni" : "Zatvoreni").StartsWith(status));  
+                #endregion
+            }
+            #endregion
+
 
             switch (sortOrder)
             {

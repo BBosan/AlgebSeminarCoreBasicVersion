@@ -2,6 +2,20 @@
 
 @{
     ViewData["Title"] = "Details";
+    string StatusDaNe(bool? status, bool statusText = false)
+    {
+        string output = "";
+
+        if (statusText)
+        {
+            output = (status == false ? "Otvoren" : "Zatvoren");
+        }
+        else
+        {
+            output = (status == false ? "color:royalblue" : "color:crimson");
+        }
+        return output;
+    }
 }
 
 <h1>Details</h1>
@@ -33,6 +47,9 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PopunjenDaNe)
+            <span style=@(StatusDaNe(Model.PopunjenDaNe))>
+                @(StatusDaNe(Model.PopunjenDaNe, statusText: true))
+            </span>
         </dd>
         <dt class="col-sm-2">
             Count
@@ -53,14 +70,18 @@
                 <table class="table">
                     <tr>
                         <th>Ime</th>
+                        <th>Prezime</th>
                     </tr>
                     @foreach (var item in Model.Predbiljezbe)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Ime)
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Prezime)
+                        </td>
+                    </tr>
                     }
                 </table>
             </dd>

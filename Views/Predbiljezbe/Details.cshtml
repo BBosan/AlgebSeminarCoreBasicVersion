@@ -2,6 +2,21 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    string StatusDaNe(bool? status, bool statusText = false)
+    {
+        string output = "";
+
+        if (statusText)
+        {
+            output = (status == false ? "Odbijen" : !status.HasValue ? "Neobradjen" : "Odobren");
+        }
+        else
+        {
+            output = (status == false ? "color:crimson" : !status.HasValue ? "color:seagreen" : "color:royalblue");
+        }
+        return output;
+    }
 }
 
 <h1>Details</h1>
@@ -46,11 +61,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BrojTelefona)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StatusDaNe)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusDaNe)
+        <dd class="col-sm-10">
+            @*@Html.DisplayFor(model => model.StatusDaNe)*@
+            <span style=@(StatusDaNe(Model.StatusDaNe))>
+                @(StatusDaNe(Model.StatusDaNe, statusText: true))
+            </span>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Seminar)

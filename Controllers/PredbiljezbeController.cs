@@ -53,8 +53,10 @@ namespace SeminarCore2.Controllers
 
         // GET: Predbiljezbas/Create
         [AllowAnonymous]
-        //public IActionResult Create(int? id)
-        public async Task<IActionResult> Create(int? id)
+        public IActionResult Create(int? id)
+        #region Kanta
+        //public async Task<IActionResult> Create(int? id) 
+        #endregion
         {
             var model = new Predbiljezba()
             {
@@ -62,15 +64,18 @@ namespace SeminarCore2.Controllers
                 SeminarID = id ?? -1
             };
 
-            if (model.SeminarID != -1)
-            {
-                var seminar = await _context.Seminari.FindAsync(model.SeminarID);
+            #region Kanta
 
-                if (seminar == null)
-                {
-                    return NotFound();
-                }
-            }
+            //if (model.SeminarID != -1)
+            //{
+            //    var seminar = await _context.Seminari.FindAsync(model.SeminarID);
+
+            //    if (seminar == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //} 
+            #endregion
 
             ViewData["SeminarID"] = new SelectList(_context.Seminari, "SeminarID", "Naziv");
             return View(model);
