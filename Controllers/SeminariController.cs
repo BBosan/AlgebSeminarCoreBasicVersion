@@ -60,6 +60,13 @@ namespace SeminarCore2.Controllers
                             .Include(x => x.Predbiljezbe) //dodao
                            select s;
 
+            #region ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                seminari = seminari.Where(x => x.PopunjenDaNe == false);
+            } 
+            #endregion
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 seminari = seminari.Where(s =>
@@ -93,7 +100,6 @@ namespace SeminarCore2.Controllers
                 #endregion
             }
             #endregion
-
 
             switch (sortOrder)
             {

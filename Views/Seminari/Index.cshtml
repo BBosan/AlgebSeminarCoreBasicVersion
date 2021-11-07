@@ -33,11 +33,14 @@
         <input type="text" id="src" class="form-control form-control-sm mr-1" name="SearchString" placeholder="Enter Search Keyword" value="@ViewData["CurrentFilter"]">
     </div>
 
-    <div class="form-group mb-2">
-        <label for="status" class="mr-2">Filter by status:</label>
-        <select id="status" class="form-control form-control-sm mr-1" name="status" asp-items="ViewBag.statusDropDown"></select>
-        <span asp-validation-for="@Model[0].PopunjenDaNe" class="text-danger"></span>
-    </div>
+    @if (signInManager.IsSignedIn(User)) //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
+    {
+        <div class="form-group mb-2">
+            <label for="status" class="mr-2">Filter by status:</label>
+            <select id="status" class="form-control form-control-sm mr-1" name="status" asp-items="ViewBag.statusDropDown"></select>
+            <span asp-validation-for="@Model[0].PopunjenDaNe" class="text-danger"></span>
+        </div>
+    }
 
     <button type="submit" class="btn btn-sm btn-dark mb-2">Search</button>
 </form>
@@ -64,9 +67,12 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Datum)</a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].PopunjenDaNe)
-            </th>
+            @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model[0].PopunjenDaNe)
+                </th>
+            }
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["BrojSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Predbiljezbe)</a>
             </th>
@@ -86,15 +92,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Datum)
                 </td>
-                <td>
-                    <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
-                        @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
-                    </span>
-                    @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
-                    @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
-                            @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
-                        </span>*@
-                </td>
+
+                @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
+                {
+                    <td>
+                        <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
+                            @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
+                        </span>
+                        @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
+                        @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
+                                @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
+                            </span>*@
+                    </td>
+                }
+
                 <td>
                     @if (item.Predbiljezbe.Count > 0)
                     {
