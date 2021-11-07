@@ -81,3 +81,9 @@ body {
     left: auto !important;
     right: 0px;
 }*/
+
+
+/*Code to change color of active link*/
+.active_link {
+    color: red !important
+}

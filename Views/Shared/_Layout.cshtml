@@ -21,8 +21,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SeminarCore2</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -57,32 +57,37 @@
                     </ul>
 
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+                        <li class="nav-item"> 
+                            <a class="nav-link text-light @(Html.IsActive("Home", "Index"))" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Seminari" asp-action="Index">Seminari</a>
+                            <a class="nav-link text-light @(Html.IsActive("Seminari", "Index"))" asp-area="" asp-controller="Seminari" asp-action="Index">Seminari</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Predbiljezbe" asp-action="Index">Predbiljezbe</a>
+                            <a class="nav-link text-light @(Html.IsActive("Predbiljezbe", "Index"))" asp-area="" asp-controller="Predbiljezbe" asp-action="Index">Predbiljezbe</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Stats">Stats</a>
+                            <a class="nav-link text-light @(Html.IsActive("Home", "Stats"))" asp-area="" asp-controller="Home" asp-action="Stats">Stats</a>
                         </li>
+
                         @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
                         {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Manage
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-controller="Admin"
-                                   asp-action="ListUsers">Users</a>
-                                <a class="dropdown-item" asp-controller="Admin"
-                                   asp-action="ListRoles">Roles</a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Admin"
+                                       asp-action="ListUsers">Users</a>
+                                    <a class="dropdown-item" asp-controller="Admin"
+                                       asp-action="ListRoles">Roles</a>
+                                </div>
+                            </li>
                         }
 
                     </ul>
@@ -91,7 +96,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid px-5">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
@@ -99,7 +104,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container-fluid">
             &copy; 2020 - SeminarCore2.2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

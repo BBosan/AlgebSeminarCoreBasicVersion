@@ -11,7 +11,7 @@ namespace SeminarCore2.Models
         //[Key]
         public int PredbiljezbaID { get; set; }
 
-        [Display(Name = "Datum Rođ."), DataType(DataType.Date)]
+        [Display(Name = "Rođ."), DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Datum { get; set; }
 
