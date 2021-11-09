@@ -2,7 +2,7 @@
 @inject SignInManager<ApplicationUser> signInManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista Seminara";
 
     //string StatusDaNe(bool? status, bool statusText = false)
     //{
@@ -21,10 +21,10 @@
 
 }
 
-<h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-sm btn-dark">Create New</a>
+    <h3>Seminari</h3>
+    @*<a asp-action="Create" class="btn btn-sm btn-dark">Create New</a>*@
 </p>
 
 <form asp-action="Index" method="get" class="form-inline">
@@ -33,7 +33,7 @@
         <input type="text" id="src" class="form-control form-control-sm mr-1" name="SearchString" placeholder="Enter Search Keyword" value="@ViewData["CurrentFilter"]">
     </div>
 
-    @if (signInManager.IsSignedIn(User)) //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
+    @if (signInManager.IsSignedIn(User)) //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve
     {
         <div class="form-group mb-2">
             <label for="status" class="mr-2">Filter by status:</label>
@@ -43,6 +43,7 @@
     }
 
     <button type="submit" class="btn btn-sm btn-dark mb-2">Search</button>
+    <button asp-action="Create" class="btn btn-sm btn-secondary mb-2 ml-1">Create New</button>
 </form>
 
 @*<form asp-action="Index" method="get">

@@ -1,7 +1,8 @@
-﻿@model IEnumerable<SeminarCore2.Models.Predbiljezba>
+﻿@model PaginatedList<SeminarCore2.Models.Predbiljezba>
+@inject SignInManager<ApplicationUser> signInManager
 
 @{
-    ViewData["Title"] = "Predbiljezbe";
+    ViewData["Title"] = "Lista Predbiljezbi";
 
     //string StatusDaNe(bool? status, bool statusText = false)
     //{
@@ -20,41 +21,52 @@
 
 }
 
-<h1>Predbiljezbe</h1>
-
 <p>
-    <a asp-action="Create" class="btn btn-sm btn-dark">Create New</a>
+    <h3>Predbiljezbe</h3>
 </p>
+
+<form asp-action="Index" method="get" class="form-inline">
+    <div class="form-group mb-2">
+        <label for="src" class="mr-3">Search:</label>
+        <input type="text" id="src" class="form-control form-control-sm mr-1" name="SearchString" placeholder="Enter Search Keyword" value="@ViewData["CurrentFilter"]">
+    </div>
+
+    <div class="form-group mb-2">
+        <label for="status" class="mr-2">Filter by status:</label>
+        <select id="status" class="form-control form-control-sm mr-1" name="status" asp-items="ViewBag.statusDropDown"></select>
+        <span asp-validation-for="@Model[0].StatusDaNe" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-sm btn-dark mb-2">Search</button>
+    <button asp-action="Create" class="btn btn-sm btn-secondary mb-2 ml-1">Create New</button>
+</form>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.PredbiljezbaID)
-                </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Datum)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Datum)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ImeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Ime)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Prezime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PrezimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Prezime)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Adresa)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AdresaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Adresa)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BrojTelefona)
+                @Html.DisplayNameFor(model => model[0].BrojTelefona)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatusDaNe)
+                @Html.DisplayNameFor(model => model[0].StatusDaNe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Seminar)
+                @Html.DisplayNameFor(model => model[0].Seminar)
             </th>
             <th></th>
         </tr>
@@ -63,9 +75,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.PredbiljezbaID)
-                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Datum)
                 </td>
@@ -107,3 +116,29 @@
     </tbody>
 </table>
 
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="btn btn-light" style="pointer-events: none">
+    Page <span class="badge badge-primary">@(Model.PageIndex)</span>
+</div>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   asp-route-currentStatus="@ViewData["CurrentStatus"]"
+   class="btn btn-light @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   asp-route-currentStatus="@ViewData["CurrentStatus"]"
+   class="btn btn-light @nextDisabled">
+    Next
+</a>
