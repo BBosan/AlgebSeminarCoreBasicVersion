@@ -22,14 +22,12 @@ public class PredbiljezbeController : Controller
         }
 
         // GET: Predbiljezbas
-        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber, string currentStatus, string status)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber, string currentStatus, string status, string currentSearchCategory, string search_category)
         {
-
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["DatumSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            ViewData["ImeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "ime_desc" : "";
-            ViewData["PrezimeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "prezime_desc" : "";
-            ViewData["AdresaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "adresa_desc" : "";
+            ViewData["ImeSortParm"] = string.IsNullOrEmpty(sortOrder) ? "ime_desc" : "";
+            ViewData["PrezimeSortParm"] = sortOrder == "prezime_asc" ? "prezime_desc" : "prezime_asc";
+            ViewData["NazivSortParm"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
 
             if (searchString != null)
             {
@@ -41,30 +39,61 @@ public class PredbiljezbeController : Controller
 
             }
 
-            if (status != null)
+            if (status != null || search_category != null)
             {
                 pageNumber = 1;
             }
             else
             {
                 status = currentStatus;
+                search_category = currentSearchCategory;
             }
 
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentStatus"] = status;
+            ViewData["CurrentSearchCategory"] = search_category;
+
 
             var predbiljezbe = _context.Predbiljezbe
                 .Include(p => p.Seminar)
                 .AsNoTracking();
 
-            if (!String.IsNullOrEmpty(searchString))
+
+            if (!string.IsNullOrEmpty(search_category) && !String.IsNullOrEmpty(searchString))
             {
-                predbiljezbe = predbiljezbe.Where(s =>
-                                          s.Ime.Contains(searchString)
-                                       || s.Prezime.Contains(searchString)
-                                       || s.Adresa.Contains(searchString)
-                                       );
+                switch (search_category)
+                {
+                    case "Ime":
+                        predbiljezbe = predbiljezbe.Where(x => x.Ime.Contains(searchString));
+                        break;
+                    case "Prezime":
+                        predbiljezbe = predbiljezbe.Where(x => x.Prezime.Contains(searchString));
+                        break;
+                    default:
+                        break;
+                }
+
             }
+
+            #region trash
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    predbiljezbe = predbiljezbe.Where(s =>
+            //                              s.Ime.Contains(searchString)
+            //                           || s.Prezime.Contains(searchString)
+            //                           || s.Adresa.Contains(searchString)
+            //                           );
+            //} 
+            #endregion
+
+            #region DropDownSearchCategory
+            var options_1 = new SelectListItem[]{
+                new SelectListItem() { Text = "Ime", Value = "Ime" },
+                new SelectListItem() { Text = "Prezime", Value = "Prezime" },
+            };
+
+            ViewBag.categoryDropDown = new SelectList(options_1, "Value", "Text", search_category);
+            #endregion
 
             #region DropDownFilterStatus
             var options = new SelectListItem[]{
@@ -123,14 +152,14 @@ public class PredbiljezbeController : Controller
                 case "prezime_desc":
                     predbiljezbe = predbiljezbe.OrderByDescending(s => s.Prezime);
                     break;
-                case "adresa_desc":
-                    predbiljezbe = predbiljezbe.OrderByDescending(s => s.Adresa);
+                case "prezime_asc":
+                    predbiljezbe = predbiljezbe.OrderBy(s => s.Prezime);
                     break;
-                case "Date":
-                    predbiljezbe = predbiljezbe.OrderBy(s => s.Datum);
+                case "name_desc":
+                    predbiljezbe = predbiljezbe.OrderByDescending(s => s.Seminar.Naziv);
                     break;
-                case "date_desc":
-                    predbiljezbe = predbiljezbe.OrderByDescending(s => s.Datum);
+                case "name_asc":
+                    predbiljezbe = predbiljezbe.OrderBy(s => s.Seminar.Naziv);
                     break;
                 default:
                     predbiljezbe = predbiljezbe.OrderBy(s => s.Ime);
