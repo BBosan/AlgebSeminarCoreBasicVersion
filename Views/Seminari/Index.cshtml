@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Lista Seminara";
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 
     //string StatusDaNe(bool? status, bool statusText = false)
     //{
@@ -44,6 +46,7 @@
 
     <button type="submit" class="btn btn-sm btn-dark mb-2">Search</button>
     <button asp-action="Create" class="btn btn-sm btn-secondary mb-2 ml-1">Create New</button>
+    <a asp-action="index" class="btn btn-sm btn-secondary mb-2 ml-1">Reset</a>
 </form>
 
 @*<form asp-action="Index" method="get">
@@ -56,113 +59,118 @@
         </div>
     </form>*@
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NazivSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Naziv)</a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Opis)
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Datum)</a>
-            </th>
-            @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model[0].PopunjenDaNe)
-                </th>
-            }
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["BrojSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Predbiljezbe)</a>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Naziv)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Opis)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Datum)
-                </td>
 
-                @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve 
-                {
-                    <td>
-                        <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
-                            @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
-                        </span>
-                        @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
-                        @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
-                                @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
-                            </span>*@
-                    </td>
-                }
-
-                <td>
-                    @if (item.Predbiljezbe.Count > 0)
-                    {
-                        @Html.DisplayFor(modelItem => item.Predbiljezbe.Count)
-                    }
-                    else
-                    {
-                        <b>Nema</b>
-                    }
-                </td>
-                <td>
-                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
-                    {
-                        <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> <text>|</text>
-                        <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> <text>|</text>
-                        <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a> <text>|</text>
-                    }
-
-                    <a asp-action="Create" asp-controller="Predbiljezbe" asp-route-id="@item.SeminarID">Upisi</a>
-                    @*
-                       <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> |
-                      <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> |
-                      <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a>
-                    *@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+@if (!Model.Any())
+{
+    <h3>No results found!</h3>
 }
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NazivSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Naziv)</a>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Opis)
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DatumSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Datum)</a>
+                </th>
+                @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].PopunjenDaNe)
+                    </th>
+                }
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["BrojSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Predbiljezbe)</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Datum)
+                    </td>
 
-@*<span class="badge badge-dark p-2">@(Model.PageIndex).</span>*@
+                    @if (signInManager.IsSignedIn(User))  //ako nije loginiran (guest) onda nema potrebe pokazivati zatvorene tecajeve
+                    {
+                        <td>
+                            <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
+                                @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
+                            </span>
+                            @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
+                            @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
+                                    @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
+                                </span>*@
+                        </td>
+                    }
 
-<div class="btn btn-light" style="pointer-events: none">
-    Page <span class="badge badge-primary">@(Model.PageIndex)</span>
-</div>
+                    <td>
+                        @if (item.Predbiljezbe.Count > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Predbiljezbe.Count)
+                        }
+                        else
+                        {
+                            <b>Nema</b>
+                        }
+                    </td>
+                    <td>
+                        @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
+                        {
+                            <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> <text>|</text>
+                            <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> <text>|</text>
+                            <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a> <text>|</text>
+                        }
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   asp-route-currentStatus="@ViewData["CurrentStatus"]"
-   class="btn btn-light @prevDisabled">
-    Previous
-</a>
+                        <a asp-action="Create" asp-controller="Predbiljezbe" asp-route-id="@item.SeminarID">Upisi</a>
+                        @*
+                             <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a>
+                        *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   asp-route-currentStatus="@ViewData["CurrentStatus"]"
-   class="btn btn-light @nextDisabled">
-    Next
-</a>
+
+    @*<span class="badge badge-dark p-2">@(Model.PageIndex).</span>*@
+
+    <div class="btn btn-light" style="pointer-events: none">
+        Page <span class="badge badge-primary">@(Model.PageIndex)</span>
+    </div>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-currentStatus="@ViewData["CurrentStatus"]"
+       class="btn btn-light @prevDisabled">
+        Previous
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-currentStatus="@ViewData["CurrentStatus"]"
+       class="btn btn-light @nextDisabled">
+        Next
+    </a>
+
+    <span class="btn btn-block disabled">Displaying: @Model.Count() results</span>
+}

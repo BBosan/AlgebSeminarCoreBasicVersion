@@ -59,90 +59,113 @@ public class PredbiljezbeController : Controller
                 .AsNoTracking();
 
 
-            if (!string.IsNullOrEmpty(search_category) && !String.IsNullOrEmpty(searchString))
-            {
-                switch (search_category)
+            #region SearchCategory
+                #region Switch
+                if (!string.IsNullOrEmpty(search_category) && !String.IsNullOrEmpty(searchString))
                 {
-                    case "Ime":
-                        predbiljezbe = predbiljezbe.Where(x => x.Ime.Contains(searchString));
-                        break;
-                    case "Prezime":
-                        predbiljezbe = predbiljezbe.Where(x => x.Prezime.Contains(searchString));
-                        break;
-                    default:
-                        break;
-                }
+                    switch (search_category)
+                    {
+                        case "Ime":
+                            predbiljezbe = predbiljezbe.Where(x => x.Ime.Contains(searchString));
+                            break;
+                        case "Prezime":
+                            predbiljezbe = predbiljezbe.Where(x => x.Prezime.Contains(searchString));
+                            break;
+                        default:
+                            break;
+                    }
+                } 
+                #endregion
 
-            }
+                #region trash
+                //if (!String.IsNullOrEmpty(searchString))
+                //{
+                //    predbiljezbe = predbiljezbe.Where(s =>
+                //                              s.Ime.Contains(searchString)
+                //                           || s.Prezime.Contains(searchString)
+                //                           || s.Adresa.Contains(searchString)
+                //                           );
+                //} 
+                #endregion
 
-            #region trash
-            //if (!String.IsNullOrEmpty(searchString))
-            //{
-            //    predbiljezbe = predbiljezbe.Where(s =>
-            //                              s.Ime.Contains(searchString)
-            //                           || s.Prezime.Contains(searchString)
-            //                           || s.Adresa.Contains(searchString)
-            //                           );
-            //} 
+                #region DropDownSearchCategory
+                var options_1 = new SelectListItem[]{
+                    new SelectListItem() { Text = "Ime", Value = "Ime" },
+                    new SelectListItem() { Text = "Prezime", Value = "Prezime" },
+                };
+
+                ViewBag.categoryDropDown = new SelectList(options_1, "Value", "Text", search_category);
+                #endregion
             #endregion
 
-            #region DropDownSearchCategory
-            var options_1 = new SelectListItem[]{
-                new SelectListItem() { Text = "Ime", Value = "Ime" },
-                new SelectListItem() { Text = "Prezime", Value = "Prezime" },
-            };
+            #region FilterStatus
+                #region SwitchVerzija
+                if (!string.IsNullOrEmpty(status))
+                {
+                    switch (status)
+                    {
+                        case "Odobreni":
+                            predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == true);
+                            break;
+                        case "Odbijeni":
+                            predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == false);
+                            break;
+                        case "Neobradjeni":
+                            predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == null);
+                            break;
+                        default:
+                            break;
+                    }
+                } 
+                #endregion
 
-            ViewBag.categoryDropDown = new SelectList(options_1, "Value", "Text", search_category);
+                #region DropDownFilterStatus
+                var options = new SelectListItem[]{
+                    new SelectListItem() { Text = "Svi", Value = ""},
+                    new SelectListItem() { Text = "Odobreni", Value = "Odobreni" },
+                    new SelectListItem() { Text = "Odbijeni", Value = "Odbijeni" },
+                    new SelectListItem() { Text = "Neobradjeni", Value = "Neobradjeni" }
+                };
+                ViewBag.statusDropDown = new SelectList(options, "Value", "Text", status);
+                #endregion
+
+                #region NonSwitchVerzija
+                //if (!string.IsNullOrEmpty(status))
+                //{
+                    #region 0_test
+                    //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == (status == "Odobreni")); 
+                    #endregion
+
+                    #region 1
+                    //predbiljezbe = predbiljezbe.Where(x => (x.StatusDaNe == false ? "Odbijeni" : !x.StatusDaNe.HasValue ? "Neobradjeni" : "Odobreni").Equals(status)); 
+                    #endregion
+
+                    #region 2
+                    //bool? test = (status == "Neobradjeni") ? (test = null) : (status == "Odobreni");
+                    //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == test); 
+                    #endregion
+
+                    #region 3_this
+                    //predbiljezbe = predbiljezbe.Where(x =>
+                    //x.StatusDaNe == ((status == "Odobreni") ? true :
+                    //    ((status == "Neobradjeni") ?
+                    //    default(bool?) /*ili (bool?)null*/
+                    //    :
+                    //    false))
+                    //);
+                    #endregion
+
+                    #region TestGood
+                    //bool? what = (status == "Odobreni") ? true : ((status == "Neobradjeni") ? (bool?)null : false);
+                    //string test2 = (what == false ? "Odbijeni" : !what.HasValue ? "Neobradjeni" : "Odobreni"); 
+                    #endregion
+
+                    #region Nez
+                    //b = status?.Equals("Neobradjeni") ?? null; 
+                    #endregion
+                //} 
+                #endregion
             #endregion
-
-            #region DropDownFilterStatus
-            var options = new SelectListItem[]{
-                new SelectListItem() { Text = "Svi", Value = ""},
-                new SelectListItem() { Text = "Odobreni", Value = "Odobreni" },
-                new SelectListItem() { Text = "Odbijeni", Value = "Odbijeni" },
-                new SelectListItem() { Text = "Neobradjeni", Value = "Neobradjeni" }
-            };
-
-            ViewBag.statusDropDown = new SelectList(options, "Value", "Text", status);
-
-
-            if (!string.IsNullOrEmpty(status))
-            {
-                //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == (status == "Odobreni"));
-
-                #region 1
-                //predbiljezbe = predbiljezbe.Where(x => (x.StatusDaNe == false ? "Odbijeni" : !x.StatusDaNe.HasValue ? "Neobradjeni" : "Odobreni").Equals(status)); 
-                #endregion
-
-                #region 2
-                //bool? test = (status == "Neobradjeni") ? (test = null) : (status == "Odobreni");
-                //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == test); 
-                #endregion
-
-                #region 3
-
-                predbiljezbe = predbiljezbe.Where(x => 
-                x.StatusDaNe == ((status == "Odobreni") ? true : 
-                    ((status == "Neobradjeni") ?
-                    default(bool?) /*ili (bool?)null*/ 
-                    : 
-                    false))
-                ); 
-
-                #endregion
-
-                #region TestGood
-                //bool? what = (status == "Odobreni") ? true : ((status == "Neobradjeni") ? (bool?)null : false);
-                //string test2 = (what == false ? "Odbijeni" : !what.HasValue ? "Neobradjeni" : "Odobreni"); 
-                #endregion
-
-                #region Nez
-                //b = status?.Equals("Neobradjeni") ?? null; 
-                #endregion
-            }
-
-            #endregion
-
 
             switch (sortOrder)
             {
@@ -166,7 +189,7 @@ public class PredbiljezbeController : Controller
                     break;
             }
 
-            int pageSize = 50;
+            int pageSize = 20;
             return View(await PaginatedList<Predbiljezba>.CreateAsync(predbiljezbe.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

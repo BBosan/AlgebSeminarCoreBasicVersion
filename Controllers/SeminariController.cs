@@ -133,7 +133,7 @@ namespace SeminarCore2.Controllers
             or return 1 if pageNumber is null. 
             */
             #endregion
-            int pageSize = 2;
+            int pageSize = 5;
             return View(await PaginatedList<Seminar>.CreateAsync(seminari.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -220,9 +220,6 @@ namespace SeminarCore2.Controllers
 
             return View(seminar);
         }
-
-
-
 
 
         // POST: Seminars/Edit/5
@@ -353,16 +350,25 @@ namespace SeminarCore2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var seminar = await _context.Seminari.FindAsync(id);
+            //var seminar = await _context.Seminari.FindAsync(id);
 
-            if (seminar == null)
+            var seminar_with_predb = await _context.Seminari
+                .Include(x => x.Predbiljezbe)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x=> x.SeminarID == id);
+
+            if (seminar_with_predb == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
             try
             {
-                _context.Seminari.Remove(seminar);
+                //var test = await _context.Predbiljezbe.Where(x => x.SeminarID == id).ToListAsync();
+                //_context.Predbiljezbe.RemoveRange(test);
+
+                _context.Predbiljezbe.RemoveRange(seminar_with_predb.Predbiljezbe);
+                _context.Seminari.Remove(seminar_with_predb);
 
                 await _context.SaveChangesAsync();
 

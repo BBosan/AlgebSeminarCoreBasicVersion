@@ -33,6 +33,12 @@ namespace SeminarCore2.Data
             }
             #endregion
 
+            //modelBuilder
+            //    .Entity<Seminar>()
+            //    .HasMany(x => x.Predbiljezbe)
+            //    .WithOne(x => x.Seminar)
+            //    .OnDelete(DeleteBehavior.Cascade); // Causes dependent entity to be deleted
+
         }
 
 
