@@ -16,6 +16,7 @@ using SeminarCore2.Extra.Security;
 using SeminarCore2.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,17 @@ namespace SeminarCore2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region App_Data Folder DB u Projektu LocalDB Primjer1
+            //https://www.youtube.com/watch?v=DSUtqG2wk2E
+            //https://stackoverflow.com/questions/59693363/how-to-create-database-in-another-location-instead-of-default-lactation-c-users
+            //https://stackoverflow.com/questions/55955282/how-to-use-datadirectory-substitution-string-in-appsettings-json-with-asp-net
+            //https://stackoverflow.com/questions/37058684/how-to-set-the-right-attachdbfilename-relative-path-in-asp-net-core
+            string path = Directory.GetCurrentDirectory();
+            services.AddDbContextPool<MojContext>(options =>
+                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")
+                            .Replace("[DataDirectory]", path)));
+            #endregion
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

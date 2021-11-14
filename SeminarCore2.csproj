@@ -39,4 +39,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+
 </Project>
