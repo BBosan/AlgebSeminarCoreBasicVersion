@@ -50,14 +50,6 @@
                 <span asp-validation-for="BrojTelefona" class="text-danger"></span>
             </div>
 
-            @*
-            <div class="form-group">
-            <label asp-for="StatusDaNe" class="control-label"></label>
-            <input asp-for="StatusDaNe" class="form-control" />
-            <span asp-validation-for="StatusDaNe" class="text-danger"></span>
-            </div>
-            *@
-
             @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin")))
             {
                 <div class="form-group">

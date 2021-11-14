@@ -190,7 +190,6 @@ namespace SeminarCore2.Controllers
         }
         #endregion
 
-
         #region EditUsersInRole
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
@@ -275,7 +274,6 @@ namespace SeminarCore2.Controllers
             return RedirectToAction("EditRole", new { Id = roleId });
         }
         #endregion
-
 
         #region EditUser
         [HttpGet]
@@ -365,7 +363,6 @@ namespace SeminarCore2.Controllers
             }
         }
         #endregion
-
 
         #region ManageUserRoles
 

@@ -77,17 +77,6 @@ public class PredbiljezbeController : Controller
                 } 
                 #endregion
 
-                #region trash
-                //if (!String.IsNullOrEmpty(searchString))
-                //{
-                //    predbiljezbe = predbiljezbe.Where(s =>
-                //                              s.Ime.Contains(searchString)
-                //                           || s.Prezime.Contains(searchString)
-                //                           || s.Adresa.Contains(searchString)
-                //                           );
-                //} 
-                #endregion
-
                 #region DropDownSearchCategory
                 var options_1 = new SelectListItem[]{
                     new SelectListItem() { Text = "Ime", Value = "Ime" },
@@ -127,43 +116,6 @@ public class PredbiljezbeController : Controller
                     new SelectListItem() { Text = "Neobradjeni", Value = "Neobradjeni" }
                 };
                 ViewBag.statusDropDown = new SelectList(options, "Value", "Text", status);
-                #endregion
-
-                #region NonSwitchVerzija
-                //if (!string.IsNullOrEmpty(status))
-                //{
-                    #region 0_test
-                    //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == (status == "Odobreni")); 
-                    #endregion
-
-                    #region 1
-                    //predbiljezbe = predbiljezbe.Where(x => (x.StatusDaNe == false ? "Odbijeni" : !x.StatusDaNe.HasValue ? "Neobradjeni" : "Odobreni").Equals(status)); 
-                    #endregion
-
-                    #region 2
-                    //bool? test = (status == "Neobradjeni") ? (test = null) : (status == "Odobreni");
-                    //predbiljezbe = predbiljezbe.Where(x => x.StatusDaNe == test); 
-                    #endregion
-
-                    #region 3_this
-                    //predbiljezbe = predbiljezbe.Where(x =>
-                    //x.StatusDaNe == ((status == "Odobreni") ? true :
-                    //    ((status == "Neobradjeni") ?
-                    //    default(bool?) /*ili (bool?)null*/
-                    //    :
-                    //    false))
-                    //);
-                    #endregion
-
-                    #region TestGood
-                    //bool? what = (status == "Odobreni") ? true : ((status == "Neobradjeni") ? (bool?)null : false);
-                    //string test2 = (what == false ? "Odbijeni" : !what.HasValue ? "Neobradjeni" : "Odobreni"); 
-                    #endregion
-
-                    #region Nez
-                    //b = status?.Equals("Neobradjeni") ?? null; 
-                    #endregion
-                //} 
                 #endregion
             #endregion
 
@@ -226,19 +178,6 @@ public class PredbiljezbeController : Controller
                 Datum = DateTime.Now,
                 SeminarID = id ?? -1
             };
-
-            #region Kanta
-
-            //if (model.SeminarID != -1)
-            //{
-            //    var seminar = await _context.Seminari.FindAsync(model.SeminarID);
-
-            //    if (seminar == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //} 
-            #endregion
 
             ViewData["SeminarID"] = new SelectList(_context.Seminari, "SeminarID", "Naziv");
             return View(model);

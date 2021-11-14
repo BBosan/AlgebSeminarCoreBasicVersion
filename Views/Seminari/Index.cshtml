@@ -6,27 +6,11 @@
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 
-    //string StatusDaNe(bool? status, bool statusText = false)
-    //{
-    //    string output = "";
-
-    //    if (statusText)
-    //    {
-    //        output = (status == false ? "Otvoren" : "Zatvoren");
-    //    }
-    //    else
-    //    {
-    //        output = (status == false ? "color:royalblue" : "color:crimson");
-    //    }
-    //    return output;
-    //}
-
 }
 
 
 <p>
     <h3>Seminari</h3>
-    @*<a asp-action="Create" class="btn btn-sm btn-dark">Create New</a>*@
 </p>
 
 <form asp-action="Index" method="get" class="form-inline">
@@ -48,16 +32,6 @@
     <button asp-action="Create" class="btn btn-sm btn-secondary mb-2 ml-1">Create New</button>
     <a asp-action="index" class="btn btn-sm btn-secondary mb-2 ml-1">Reset</a>
 </form>
-
-@*<form asp-action="Index" method="get">
-        <div class="form-actions no-color">
-            <p>
-                Search by Naziv: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                <input type="submit" value="Search" class="btn btn-sm btn-dark" /> |
-                <a asp-action="Index">Back to Full List</a>
-            </p>
-        </div>
-    </form>*@
 
 
 @if (!Model.Any())
@@ -85,7 +59,7 @@ else
                     </th>
                 }
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["BrojSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">@Html.DisplayNameFor(model => model[0].Predbiljezbe)</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["BrojSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-currentStatus="@ViewData["CurrentStatus"]">Broj Upisanih</a>
                 </th>
                 <th></th>
             </tr>
@@ -110,10 +84,6 @@ else
                             <span style=@(GlobalFunctions.StatusDaNe(item.PopunjenDaNe))>
                                 @(GlobalFunctions.StatusDaNe(item.PopunjenDaNe, statusText: true))
                             </span>
-                            @*@Html.DisplayFor(modelItem => item.PopunjenDaNe)*@
-                            @*<span style=@(item.PopunjenDaNe == false ? "color:royalblue" : "color:crimson")>
-                                    @(item.PopunjenDaNe == false ? "Otvoren" : "Zatvoren")
-                                </span>*@
                         </td>
                     }
 
@@ -136,19 +106,12 @@ else
                         }
 
                         <a asp-action="Create" asp-controller="Predbiljezbe" asp-route-id="@item.SeminarID">Upisi</a>
-                        @*
-                             <a asp-action="Edit" asp-route-id="@item.SeminarID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.SeminarID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.SeminarID">Delete</a>
-                        *@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-
-    @*<span class="badge badge-dark p-2">@(Model.PageIndex).</span>*@
 
     <div class="btn btn-light" style="pointer-events: none">
         Page <span class="badge badge-primary">@(Model.PageIndex)</span>

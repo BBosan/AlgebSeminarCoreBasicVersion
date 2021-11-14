@@ -41,7 +41,6 @@ namespace SeminarCore2.Models
         public string BrojTelefona { get; set; }
 
         [Display(Name = "Status")]
-        //[DisplayFormat(NullDisplayText = "NotSet")] //trebam displayfor isl, nece sa tag helper
         public Nullable<bool> StatusDaNe { get; set; }
 
         public int SeminarID { get; set; }

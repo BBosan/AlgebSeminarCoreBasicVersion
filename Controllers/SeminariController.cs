@@ -225,70 +225,6 @@ namespace SeminarCore2.Controllers
         // POST: Seminars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        #region OldBeforeOverPostingFIx
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("SeminarID,Naziv,Opis,Datum,PopunjenDaNe")] Seminar seminar)
-        //{
-        //    if (id != seminar.SeminarID)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(seminar);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!SeminarExists(seminar.SeminarID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(seminar);
-        //} 
-        #endregion
-
-        #region AlternativeForOverPostingFIx
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("SeminarID,Naziv,Opis,Datum,PopunjenDaNe")] Seminar seminar)
-        //{
-        //    if (id != seminar.SeminarID)
-        //    {
-        //        return NotFound();
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(seminar);
-        //            await _context.SaveChangesAsync();
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch (DbUpdateException /* ex */)
-        //        {
-        //            //Log the error (uncomment ex variable name and write a log.)
-        //            ModelState.AddModelError("", "Unable to save changes. " +
-        //                "Try again, and if the problem persists, " +
-        //                "see your system administrator.");
-        //        }
-        //    }
-
-        //    return View(seminar);
-        //}
-        #endregion
-
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
@@ -350,8 +286,6 @@ namespace SeminarCore2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var seminar = await _context.Seminari.FindAsync(id);
-
             var seminar_with_predb = await _context.Seminari
                 .Include(x => x.Predbiljezbe)
                 .AsNoTracking()
@@ -364,8 +298,6 @@ namespace SeminarCore2.Controllers
 
             try
             {
-                //var test = await _context.Predbiljezbe.Where(x => x.SeminarID == id).ToListAsync();
-                //_context.Predbiljezbe.RemoveRange(test);
 
                 _context.Predbiljezbe.RemoveRange(seminar_with_predb.Predbiljezbe);
                 _context.Seminari.Remove(seminar_with_predb);

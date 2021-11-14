@@ -54,6 +54,8 @@ namespace SeminarCore2
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireDigit = false;
+                opt.SignIn.RequireConfirmedEmail = false;
+                opt.SignIn.RequireConfirmedPhoneNumber = false;
 
             }).AddEntityFrameworkStores<MojContext>();
             #endregion
