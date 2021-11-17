@@ -176,7 +176,7 @@ namespace SeminarCore2.Controllers
 
                     return View("ListRoles");
                 }
-                catch (DbUpdateException ex)
+                catch (DbUpdateException)
                 {
                     ViewBag.ErrorTitle = $"{role.Name} role is in use!";
                     ViewBag.ErrorMessage = $"{role.Name} cannot be deleted as there are users " +
